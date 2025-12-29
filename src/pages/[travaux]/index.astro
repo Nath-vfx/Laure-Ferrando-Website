@@ -29,12 +29,14 @@ const fetcher = new Fetcher();
 const data = await fetcher.fetchData(`/wp-json/wp/v2/travail?categories=${identifiant}&per_page=100`);
 
 // Transform data for the Vue component
-const images = data && data.length > 0 ? data.map((item: any) => ({
-    url: item.acf.oeuvre.url,
-    alt: item.title?.rendered || "Œuvre d'art",
-    title: item.title?.rendered || "Sans titre",
-    description: item.acf.description || ""
-})) : [];
+const images = data && data.length > 0 ? data
+    .filter((item: any) => item.acf?.oeuvre?.url)
+    .map((item: any) => ({
+        url: item.acf.oeuvre.url,
+        alt: item.title?.rendered || "Œuvre d'art",
+        title: item.title?.rendered || "Sans titre",
+        description: item.acf.description || ""
+    })) : [];
 ---
 
 <Layout title={title}>
