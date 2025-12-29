@@ -5,7 +5,7 @@
         <img :src="image.url" :alt="image.alt" loading="lazy" />
         <div class="overlay">
           <div class="overlay-content">
-            <h3>{{ image.title }}</h3>
+            <h3 v-html="image.title"></h3>
             <p>{{ truncateDescription(image.description) }}</p>
           </div>
         </div>
@@ -31,8 +31,8 @@
             <img :src="currentImage.url" :alt="currentImage.alt" />
           </div>
           <div class="modal-info">
-            <h3>{{ currentImage.title }}</h3>
-            <p v-if="currentImage.description" class="modal-description">{{ currentImage.description }}</p>
+            <h3 v-html="currentImage.title"></h3>
+            <p v-if="currentImage.description" class="modal-description" v-html="currentImage.description"></p>
             <span class="modal-counter">{{ currentImageIndex + 1 }} / {{ images.length }}</span>
           </div>
         </div>

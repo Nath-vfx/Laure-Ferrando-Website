@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Masonry from "../../components/reactive/Masonry.vue";
+import { Fetcher } from "../../utils/fetchUtils.js";
 
 export async function getStaticPaths() {
     return [
@@ -24,9 +25,8 @@ const identifiants: any = {
 const title = pageTitles[travaux] || "Mon travail";
 const identifiant = identifiants[travaux] || 0;
 
-const fetchUrl = `https://admin.laure-ferrando.com/wp-json/wp/v2/travail?categories=${identifiant}`;
-const response = await fetch(fetchUrl);
-const data = await response.json();
+const fetcher = new Fetcher();
+const data = await fetcher.fetchData(`/wp-json/wp/v2/travail?categories=${identifiant}&per_page=100`);
 
 // Transform data for the Vue component
 const images = data && data.length > 0 ? data.map((item: any) => ({
