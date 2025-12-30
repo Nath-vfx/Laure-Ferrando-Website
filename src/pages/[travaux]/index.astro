@@ -3,6 +3,8 @@ import Layout from "../../layouts/Layout.astro";
 import Masonry from "../../components/reactive/Masonry.vue";
 import { Fetcher } from "../../utils/fetchUtils.js";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
     return [
         { params: { travaux: "tableaux" } },

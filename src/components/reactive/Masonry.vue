@@ -6,7 +6,7 @@
         <div class="overlay">
           <div class="overlay-content">
             <h3 v-html="image.title"></h3>
-            <p>{{ truncateDescription(image.description) }}</p>
+            <p v-html="truncateDescription(image.description)"></p>
           </div>
         </div>
       </div>
