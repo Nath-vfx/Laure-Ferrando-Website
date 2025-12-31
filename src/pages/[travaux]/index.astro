@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Masonry from "../../components/reactive/Masonry.vue";
+import Masonry from "../../components/Masonry.astro";
 import { Fetcher } from "../../utils/fetchUtils.js";
 
 export const prerender = true;
@@ -44,7 +44,7 @@ const images = data && data.length > 0 ? data
 <Layout title={title}>
     {
         images.length > 0 ? (
-            <Masonry images={images} client:load />
+            <Masonry images={images} />
         ) : (
             <main class="EmptyState">
                 <div class="EmptyState__container">
