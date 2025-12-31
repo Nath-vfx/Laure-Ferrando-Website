@@ -1,0 +1,276 @@
+---
+import { Picture } from 'astro:assets';
+
+interface Image {
+  url: string;
+  alt: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  images: Image[];
+  scrollSpeed?: number;
+}
+
+const { images = [], scrollSpeed = 5 } = Astro.props;
+
+// Dupliquer les images pour créer un effet de boucle infinie
+const extendedImages = [...images, ...images, ...images];
+---
+
+<div class="carousel">
+  <div class="carousel__track">
+    {extendedImages.map((image, index) => (
+      <div class="carousel__item">
+        <Picture
+          src={image.url}
+          alt={image.alt}
+          width={800}
+          height={560}
+          widths={[400, 600, 800]}
+          sizes="(max-width: 768px) 300px, (max-width: 1200px) 400px, 500px"
+          formats={['avif', 'webp']}
+          loading={index < 6 ? 'eager' : 'lazy'}
+          class="carousel__image"
+        />
+        <div class="carousel__overlay">
+          <div class="carousel__overlay-content">
+            <h3 set:html={image.title} />
+            {image.description && (
+              <p set:html={image.description} />
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script define:vars={{ scrollSpeed }}>
+  const track = document.querySelector('.carousel__track');
+  if (track) {
+    // Calculer la largeur d'un set complet d'images
+    const firstItem = track.querySelector('.carousel__item');
+    if (firstItem) {
+      const itemWidth = firstItem.offsetWidth;
+      const totalItems = track.children.length / 3; // Car on a triplé les images
+      const oneSetWidth = itemWidth * totalItems;
+      
+      let position = 0;
+      let isAnimating = true;
+      let animationId = null;
+      
+      function animate() {
+        if (isAnimating) {
+          position -= 0.3;
+          
+          // Réinitialiser la position pour créer la boucle
+          if (Math.abs(position) >= oneSetWidth) {
+            position = 0;
+          }
+          
+          track.style.transform = `translateX(${position}px)`;
+        }
+        animationId = requestAnimationFrame(animate);
+      }
+      
+      // Gérer le survol pour arrêter/reprendre l'animation
+      const items = track.querySelectorAll('.carousel__item');
+      items.forEach(item => {
+        // Souris (desktop)
+        item.addEventListener('mouseenter', () => {
+          isAnimating = false;
+        });
+        
+        item.addEventListener('mouseleave', () => {
+          isAnimating = true;
+        });
+
+        // Tactile (mobile) - toggle au tap
+        item.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          
+          // Vérifier l'état actuel de cet item
+          const isCurrentlyActive = item.classList.contains('touch-active');
+          
+          // Désactiver tous les autres items
+          items.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('touch-active');
+            }
+          });
+          
+          // Toggle l'état de l'item courant
+          if (isCurrentlyActive) {
+            // Si déjà actif, on désactive
+            item.classList.remove('touch-active');
+            isAnimating = true;
+          } else {
+            // Si inactif, on active
+            item.classList.add('touch-active');
+            isAnimating = false;
+          }
+        });
+      });
+      
+      // Démarrer l'animation après un court délai
+      setTimeout(() => {
+        animate();
+      }, 100);
+    }
+  }
+</script>
+
+<style lang="scss">
+.carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 3rem 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.02) 50%, transparent 100%);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, $background-color 0%, transparent 100%);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, $background-color 0%, transparent 100%);
+  }
+
+  &__track {
+    display: flex;
+    gap: 2rem;
+    will-change: transform;
+
+    @media (max-width: 768px) {
+      gap: 1.5rem;
+    }
+  }
+
+  &__item {
+    position: relative;
+    flex-shrink: 0;
+    width: 500px;
+    height: 768px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    transition: all 0.4s ease;
+    object-fit: cover;
+
+    // Hover uniquement pour les appareils avec souris
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+
+        .carousel__overlay {
+          opacity: 1;
+        }
+
+        .carousel__image :global(img) {
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    // Touch active pour mobile
+    &.touch-active {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+
+      .carousel__overlay {
+        opacity: 1;
+      }
+
+      .carousel__image :global(img) {
+        transform: scale(1.05);
+      }
+    }
+
+    @media (max-width: 1200px) {
+      width: 400px;
+      height: 480px;
+    }
+
+    @media (max-width: 768px) {
+      width: 300px;
+      height: 480px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    object-fit: cover;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.3) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    z-index: 1;
+  }
+
+  &__overlay-content {
+    color: white;
+
+    h3 {
+      font-family: $font-family-titles;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.3;
+
+      @media (max-width: 768px) {
+        font-size: 1.1rem;
+      }
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin: 0;
+      opacity: 0.9;
+      line-height: 1.4;
+
+      @media (max-width: 768px) {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+</style>

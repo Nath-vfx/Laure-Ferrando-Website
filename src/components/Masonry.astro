@@ -344,6 +344,7 @@ function truncateDescription(description: string | undefined): string {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(5px);
+  overflow: hidden;
 }
 
 .modal-content {
@@ -354,6 +355,7 @@ function truncateDescription(description: string | undefined): string {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .modal-close {
@@ -419,6 +421,7 @@ function truncateDescription(description: string | undefined): string {
   max-height: 85vh;
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .modal-image-container {
@@ -449,6 +452,7 @@ function truncateDescription(description: string | undefined): string {
   text-align: left;
   max-height: 75vh;
   overflow-y: auto;
+  box-sizing: border-box;
 
   h3 {
     margin: 0 0 1.5rem 0;
@@ -474,42 +478,84 @@ function truncateDescription(description: string | undefined): string {
   }
 }
 
-@media screen and (max-width: 768px) {
-  .modal-nav {
-    width: 44px;
-    height: 44px;
-    padding: 0.8rem;
+@media screen and (max-width: 1024px) {
+  .modal {
+    overflow: auto;
+  }
+
+  .modal-content {
+    padding: 0;
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal-close {
-    top: 0.5rem;
-    right: 1rem;
+    position: fixed;
+    top: 10px;
+    right: 10px;
     width: 36px;
     height: 36px;
     font-size: 1.5rem;
+    z-index: 1002;
+  }
+
+  .modal-nav {
+    position: fixed;
+    width: 44px;
+    height: 44px;
+    padding: 0.8rem;
+    
+    &.modal-prev {
+      left: 10px;
+    }
+
+    &.modal-next {
+      right: 10px;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .modal-layout {
     flex-direction: column;
-    max-height: 95vh;
-    gap: 1.5rem;
-    max-width: 95%;
+    max-height: none;
+    min-height: 100vh;
+    gap: 0;
+    width: 100vw;
+    max-width: 100vw;
+    padding: 60px 0 20px;
+    box-sizing: border-box;
   }
 
   .modal-image-container {
-    max-height: 50vh;
+    max-height: none;
+    width: 100vw;
+    max-width: 100vw;
+    margin-bottom: 1rem;
+    padding: 0 10px;
+    box-sizing: border-box;
     
     img {
-      max-height: 50vh;
-      max-width: 90vw;
+      max-width: calc(100vw - 20px);
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
     }
   }
 
   .modal-info {
-    flex: 0 0 auto;
-    width: 100%;
-    max-height: 40vh;
-    padding: 1rem;
+    flex: none;
+    width: 100vw;
+    max-width: 100vw;
+    max-height: none;
+    padding: 1rem 20px;
+    overflow-y: visible;
+    box-sizing: border-box;
     
     h3 {
       font-size: 1.2rem;
@@ -526,4 +572,5 @@ function truncateDescription(description: string | undefined): string {
     }
   }
 }
+
 </style>
