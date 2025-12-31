@@ -9,7 +9,7 @@ export async function getStaticPaths() {
     return [
         { params: { travaux: "tableaux" } },
         { params: { travaux: "sculptures" } },
-        { params: { travaux: "vaisselles" } },
+        { params: { travaux: "pieces" } },
     ];
 }
 
@@ -17,12 +17,12 @@ const { travaux } = Astro.params;
 const pageTitles: any = {
     tableaux: "Tableaux",
     sculptures: "Sculptures",
-    vaisselles: "Vaisselles",
+    pieces: "Pièces",
 };
 const identifiants: any = {
     tableaux: 4,
     sculptures: 3,
-    vaisselles: 2,
+    pieces: 2,
 };
 const title = pageTitles[travaux] || "Mon travail";
 const identifiant = identifiants[travaux] || 0;
