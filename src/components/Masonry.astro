@@ -1,134 +1,176 @@
-<template>
-  <div class="masonry-container">
-    <div class="masonry-grid">
-      <div class="masonry-item" v-for="(image, index) in images" :key="index" :class="`item-${(index % 4) + 1}`" @click="openModal(index)">
-        <img :src="image.url" :alt="image.alt" loading="lazy" />
+---
+import { Picture } from 'astro:assets';
+
+interface Image {
+  url: string;
+  alt: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  images: Image[];
+}
+
+const { images = [] } = Astro.props;
+
+function truncateDescription(description: string | undefined): string {
+  if (!description) return '';
+  return description.length > 80 ? description.substring(0, 80) + '...' : description;
+}
+---
+
+<div class="masonry-container">
+  <div class="masonry-grid">
+    {images.map((image, index) => (
+      <div 
+        class={`masonry-item item-${(index % 4) + 1}`}
+        data-index={index}
+        data-url={image.url}
+      >
+        <Picture
+          src={image.url}
+          alt={image.alt}
+          widths={[300, 400, 600]}
+          sizes="(max-width: 480px) 300px, (max-width: 768px) 400px, 600px"
+          formats={['avif', 'webp']}
+          loading="lazy"
+          inferSize={true}
+          class="masonry-image"
+        />
         <div class="overlay">
           <div class="overlay-content">
-            <h3 v-html="image.title"></h3>
-            <p v-html="truncateDescription(image.description)"></p>
+            <h3 set:html={image.title} />
+            <p set:html={truncateDescription(image.description)} />
           </div>
         </div>
       </div>
-    </div>
-    
-    <!-- Modal -->
-    <div v-if="showModal" class="modal" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <span class="modal-close" @click="closeModal">&times;</span>
-        <button class="modal-nav modal-prev" @click="showPrevImage" aria-label="Image précédente">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15,18 9,12 15,6"></polyline>
-          </svg>
-        </button>
-        <button class="modal-nav modal-next" @click="showNextImage" aria-label="Image suivante">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9,18 15,12 9,6"></polyline>
-          </svg>
-        </button>
-        <div class="modal-layout">
-          <div class="modal-image-container">
-            <img :src="currentImage.url" :alt="currentImage.alt" />
-          </div>
-          <div class="modal-info">
-            <h3 v-html="currentImage.title"></h3>
-            <p v-if="currentImage.description" class="modal-description" v-html="currentImage.description"></p>
-            <span class="modal-counter">{{ currentImageIndex + 1 }} / {{ images.length }}</span>
-          </div>
+    ))}
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal" id="imageModal">
+    <div class="modal-content">
+      <span class="modal-close" id="closeModal">&times;</span>
+      <button class="modal-nav modal-prev" id="prevImage" aria-label="Image précédente">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+      </button>
+      <button class="modal-nav modal-next" id="nextImage" aria-label="Image suivante">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+      </button>
+      <div class="modal-layout">
+        <div class="modal-image-container">
+          <img id="modalImage" src="" alt="" />
+        </div>
+        <div class="modal-info">
+          <h3 id="modalTitle"></h3>
+          <p class="modal-description" id="modalDescription"></p>
+          <span class="modal-counter" id="modalCounter"></span>
         </div>
       </div>
     </div>
   </div>
-</template>
+</div>
 
-<script>
-export default {
-  props: {
-    images: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      showModal: false,
-      currentImageIndex: 0
-    };
-  },
-  computed: {
-    currentImage() {
-      return this.images[this.currentImageIndex] || {};
-    }
-  },
-  mounted() {
-    this.initMasonry();
-    window.addEventListener('resize', this.handleResize);
-    document.addEventListener('keydown', this.handleKeydown);
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-    document.removeEventListener('keydown', this.handleKeydown);
-  },
-  methods: {
-    initMasonry() {
-      // Animation d'apparition progressive
-      const items = document.querySelectorAll('.masonry-item');
-      items.forEach((item, index) => {
-        setTimeout(() => {
-          item.classList.add('animate-in');
-        }, index * 100);
-      });
-    },
-    handleResize() {
-      // Réajustement si nécessaire
-      clearTimeout(this.resizeTimeout);
-      this.resizeTimeout = setTimeout(() => {
-        this.initMasonry();
-      }, 250);
-    },
-    openModal(index) {
-      this.currentImageIndex = index;
-      this.showModal = true;
-      document.body.style.overflow = 'hidden';
-    },
-    closeModal() {
-      this.showModal = false;
-      document.body.style.overflow = 'auto';
-    },
-    showPrevImage() {
-      this.currentImageIndex = this.currentImageIndex > 0 
-        ? this.currentImageIndex - 1 
-        : this.images.length - 1;
-    },
-    showNextImage() {
-      this.currentImageIndex = this.currentImageIndex < this.images.length - 1 
-        ? this.currentImageIndex + 1 
-        : 0;
-    },
-    handleKeydown(e) {
-      if (this.showModal) {
-        switch (e.key) {
-          case 'Escape':
-            this.closeModal();
-            break;
-          case 'ArrowLeft':
-            this.showPrevImage();
-            break;
-          case 'ArrowRight':
-            this.showNextImage();
-            break;
-        }
-      }
-    },
-    truncateDescription(description) {
-      if (!description) return '';
-      return description.length > 80 ? description.substring(0, 80) + '...' : description;
-    }
+<script define:vars={{ images }}>
+  let currentImageIndex = 0;
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalCounter = document.getElementById('modalCounter');
+  const closeBtn = document.getElementById('closeModal');
+  const prevBtn = document.getElementById('prevImage');
+  const nextBtn = document.getElementById('nextImage');
+  const items = document.querySelectorAll('.masonry-item');
+
+  // Animation d'apparition progressive
+  items.forEach((item, index) => {
+    setTimeout(() => {
+      item.classList.add('animate-in');
+    }, index * 100);
+  });
+
+  // Ouvrir la modal
+  items.forEach((item, index) => {
+    item.addEventListener('click', () => {
+    // Précharger l'image en haute résolution pour la modal
+    const img = new Image();
+    img.src = images[index].url;
+      openModal(index);
+    });
+  });
+
+  function openModal(index) {
+    currentImageIndex = index;
+    updateModalContent();
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
   }
-};
+
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+
+  function showPrevImage() {
+    currentImageIndex = currentImageIndex > 0 
+      ? currentImageIndex - 1 
+      : images.length - 1;
+    updateModalContent();
+  }
+
+  function showNextImage() {
+    currentImageIndex = currentImageIndex < images.length - 1 
+      ? currentImageIndex + 1 
+      : 0;
+    updateModalContent();
+  }
+
+  function updateModalContent() {
+    const image = images[currentImageIndex];
+    modalImage.src = image.url;
+    modalImage.alt = image.alt;
+    modalTitle.innerHTML = image.title;
+    modalDescription.innerHTML = image.description || '';
+    modalDescription.style.display = image.description ? 'block' : 'none';
+    modalCounter.textContent = `${currentImageIndex + 1} / ${images.length}`;
+  }
+
+  // Events
+  closeBtn.addEventListener('click', closeModal);
+  prevBtn.addEventListener('click', showPrevImage);
+  nextBtn.addEventListener('click', showNextImage);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Clavier
+  document.addEventListener('keydown', (e) => {
+    if (modal.style.display === 'block') {
+      switch (e.key) {
+        case 'Escape':
+          closeModal();
+          break;
+        case 'ArrowLeft':
+          showPrevImage();
+          break;
+        case 'ArrowRight':
+          showNextImage();
+          break;
+      }
+    }
+  });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .masonry-container {
   width: 100%;
   padding: 2rem 1rem;
@@ -181,12 +223,11 @@ export default {
       opacity: 1;
     }
 
-    img {
+    .masonry-image :global(img) {
       transform: scale(1.05);
     }
   }
 
-  // Hauteurs variables pour l'effet maçonnerie (réduites)
   &.item-1 {
     grid-row-end: span 18;
 
@@ -220,12 +261,22 @@ export default {
   }
 }
 
-img {
+.masonry-image {
   width: 100%;
   height: 100%;
+  position: absolute;
   object-fit: cover;
-  transition: transform 0.4s ease;
-  display: block;
+  top: 0;
+  left: 0;
+  
+  :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.4s ease;
+    display: block;
+  }
 }
 
 .overlay {
@@ -262,20 +313,6 @@ img {
   }
 }
 
-// Animation d'apparition
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
 @media (max-width: 480px) {
   .masonry-container {
     padding: 1rem 0.5rem;
@@ -298,6 +335,7 @@ img {
 
 /* Modal Styles */
 .modal {
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -436,7 +474,6 @@ img {
   }
 }
 
-/* Mobile specific modal adjustments */
 @media screen and (max-width: 768px) {
   .modal-nav {
     width: 44px;
