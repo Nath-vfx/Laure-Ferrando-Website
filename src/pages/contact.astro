@@ -1,23 +1,38 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ContactForm from "../components/reactive/ContactForm.vue";
+import { Fetcher } from "../utils/fetchUtils.js";
+
+const fetcher = new Fetcher();
+
+// Récupération des données de la page Contact
+let pageData = null;
+try {
+    pageData = await fetcher.fetchData('/wp-json/wp/v2/pages/30550');
+} catch (err) {
+    console.error('Erreur lors de la récupération de la page Contact:', err);
+}
 ---
 
 <Layout title="Contact">
     <main class="Contact">
         <section class="Contact__infos">
-            <div class="Contact__infos__topic">
-                <h1 class="Contact__infos__topic__title">Contactez-moi</h1>
-                <p class="Contact__infos__topic__text">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Fugiat laudantium illo vero excepturi totam blanditiis sint
-                    maxime pariatur. Vitae temporibus tempore, culpa numquam quo
-                    debitis cupiditate laboriosam vero. Praesentium omnis ab
-                    nihil aspernatur, fugiat magni iure. Suscipit quibusdam,
-                    molestiae, quo perferendis error omnis maiores, tenetur
-                    animi at dignissimos veritatis iste!
-                </p>
-            </div>
+            {pageData && pageData.content && pageData.content.rendered ? (
+                <div class="Contact__infos__topic">
+                    <h1 class="Contact__infos__topic__title" set:html={pageData.title?.rendered || "Contactez-moi"} />
+                    <div
+                        class="Contact__infos__topic__content"
+                        set:html={pageData.content.rendered}
+                    />
+                </div>
+            ) : (
+                <div class="Contact__infos__topic">
+                    <h1 class="Contact__infos__topic__title">Contactez-moi</h1>
+                    <p class="Contact__infos__topic__text">
+                        Contenu non disponible pour le moment.
+                    </p>
+                </div>
+            )}
             <div class="Contact__infos__topic">
                 <ul class="Contact__infos__topic__list">
                     <li class="Contact__infos__topic__list__item">
@@ -128,6 +143,46 @@ import ContactForm from "../components/reactive/ContactForm.vue";
                     @media (max-width: 768px) {
                         font-size: 1rem;
                         text-align: left;
+                    }
+                }
+                
+                &__content {
+                    font-family: $font-family-text;
+                    color: $text-color;
+                    line-height: 1.8;
+                    
+                    :global(h2) {
+                        font-family: $font-family-titles;
+                        font-size: 1.5rem;
+                        color: $accent-color;
+                        margin-top: 2rem;
+                        margin-bottom: 1rem;
+                    }
+                    
+                    :global(p) {
+                        font-size: 1.125rem;
+                        margin-bottom: 1rem;
+                        text-align: justify;
+                        
+                        @media (max-width: 768px) {
+                            font-size: 1rem;
+                            text-align: left;
+                        }
+                    }
+                    
+                    :global(figure) {
+                        margin: 1.5rem 0;
+                        
+                        &.wp-block-image {
+                            text-align: center;
+                        }
+                    }
+                    
+                    :global(img) {
+                        max-width: 100%;
+                        height: auto;
+                        border-radius: 4px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                     }
                 }
 
