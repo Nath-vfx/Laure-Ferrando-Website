@@ -208,11 +208,6 @@ const resetForm = () => {
 <style lang="scss" scoped>
 .Contact {
     &__form {
-        background: white;
-        padding: 2.5rem;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-
         form {
             display: flex;
             flex-direction: column;
@@ -225,38 +220,37 @@ const resetForm = () => {
             gap: 0.5rem;
 
             label {
-                font-weight: 600;
-                color: var(--text-color);
-                font-size: 0.95rem;
+                font-family: $font-family-titles;
+                font-weight: 500;
+                color: $accent-color;
+                font-size: 1rem;
                 margin-bottom: 0.25rem;
             }
 
             input,
             textarea {
-                border: 2px solid #e9ecef;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                font-family: $font-family-text;
                 font-size: 1rem;
-                padding: 1rem 1.25rem;
-                border-radius: 8px;
-                transition: all 0.3s ease;
-                font-family: inherit;
-                background: #fafafa;
+                padding: 0.75rem 1rem;
+                border-radius: 4px;
+                transition: border-color 0.2s ease;
+                background: white;
+                color: $text-color;
 
                 &:focus {
                     outline: none;
-                    border-color: var(--accent-color);
-                    background: white;
-                    box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.1);
+                    border-color: $accent-color;
                 }
 
                 &::placeholder {
-                    color: #adb5bd;
+                    color: rgba(0, 0, 0, 0.4);
                 }
 
                 &:disabled {
-                    background: #f8f9fa;
-                    color: #6c757d;
+                    background: rgba(0, 0, 0, 0.05);
+                    color: rgba(0, 0, 0, 0.5);
                     cursor: not-allowed;
-                    border-color: #e9ecef;
                     opacity: 0.7;
                 }
             }
@@ -266,59 +260,32 @@ const resetForm = () => {
             }
 
             textarea {
-                height: 8rem;
+                height: 10rem;
                 resize: vertical;
-                min-height: 6rem;
-                max-height: 12rem;
+                min-height: 8rem;
+                max-height: 16rem;
             }
         }
 
         &__button {
             border: none;
-            background: linear-gradient(
-                135deg,
-                var(--accent-color) 0%,
-                #007bff 100%
-            );
+            background: $accent-color;
             color: white;
-            font-size: 1.1rem;
+            font-family: $font-family-text;
+            font-size: 1rem;
             font-weight: 600;
-            padding: 1rem 2rem;
-            border-radius: 8px;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-
-            &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.2),
-                    transparent
-                );
-                transition: left 0.5s;
-            }
+            transition: opacity 0.2s ease;
+            align-self: flex-start;
 
             &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-
-                &::before {
-                    left: 100%;
-                }
+                opacity: 0.85;
             }
 
             &:active {
-                transform: translateY(0);
+                opacity: 0.7;
             }
         }
 
@@ -326,20 +293,17 @@ const resetForm = () => {
         &__success,
         &__error {
             text-align: center;
-            padding: 3rem 2.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 3rem 2rem;
 
             @media screen and (max-width: 768px) {
-                padding: 2rem;
+                padding: 2rem 1rem;
             }
 
             h2 {
+                font-family: $font-family-titles;
                 margin: 1.5rem 0 1rem;
                 font-size: 1.75rem;
-                font-weight: 700;
-                color: #2d2d2d;
+                color: $text-color;
 
                 @media screen and (max-width: 768px) {
                     font-size: 1.5rem;
@@ -347,9 +311,11 @@ const resetForm = () => {
             }
 
             p {
-                color: #666;
+                font-family: $font-family-text;
+                color: $text-color;
+                opacity: 0.8;
                 margin-bottom: 2rem;
-                font-size: 1.1rem;
+                font-size: 1.125rem;
                 line-height: 1.6;
             }
         }
@@ -359,7 +325,7 @@ const resetForm = () => {
                 width: 80px;
                 height: 80px;
                 margin: 0 auto;
-                background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+                background: #4caf50;
                 color: white;
                 border-radius: 50%;
                 display: flex;
@@ -367,36 +333,26 @@ const resetForm = () => {
                 justify-content: center;
                 font-size: 2.5rem;
                 font-weight: bold;
-                box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
-                animation: successPulse 2s ease-in-out infinite;
             }
 
             &-button {
-                padding: 1rem 2rem;
-                background: linear-gradient(
-                    135deg,
-                    var(--accent-color) 0%,
-                    #007bff 100%
-                );
+                padding: 1rem 2.5rem;
+                background: $accent-color;
                 color: white;
                 border: none;
-                border-radius: 8px;
+                border-radius: 4px;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: opacity 0.2s ease;
                 font-weight: 600;
                 font-size: 1rem;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-                font-family: inherit;
+                font-family: $font-family-text;
 
                 &:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                    opacity: 0.85;
                 }
 
                 &:active {
-                    transform: translateY(0);
+                    opacity: 0.7;
                 }
             }
         }
@@ -406,7 +362,7 @@ const resetForm = () => {
                 width: 80px;
                 height: 80px;
                 margin: 0 auto;
-                background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+                background: #f44336;
                 color: white;
                 border-radius: 50%;
                 display: flex;
@@ -414,57 +370,46 @@ const resetForm = () => {
                 justify-content: center;
                 font-size: 2.5rem;
                 font-weight: bold;
-                box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
-                animation: errorShake 0.5s ease-in-out;
             }
 
             &-button {
-                padding: 1rem 2rem;
-                background: linear-gradient(
-                    135deg,
-                    var(--accent-color) 0%,
-                    #007bff 100%
-                );
+                padding: 1rem 2.5rem;
+                background: $accent-color;
                 color: white;
                 border: none;
-                border-radius: 8px;
+                border-radius: 4px;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: opacity 0.2s ease;
                 font-weight: 600;
                 font-size: 1rem;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-                font-family: inherit;
+                font-family: $font-family-text;
 
                 &:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                    opacity: 0.85;
                 }
 
                 &:active {
-                    transform: translateY(0);
+                    opacity: 0.7;
                 }
             }
 
             &-text {
-                color: #dc3545;
+                color: #f44336;
                 font-size: 0.9rem;
                 font-weight: 500;
                 margin-top: 0.5rem;
                 display: block;
+                font-family: $font-family-text;
             }
         }
 
         &__button {
             &--loading {
-                opacity: 0.8;
+                opacity: 0.6;
                 cursor: not-allowed;
-                transform: none;
 
                 &:hover {
-                    transform: none;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                    opacity: 0.6;
                 }
             }
 
@@ -476,8 +421,8 @@ const resetForm = () => {
             }
 
             &-spinner {
-                width: 20px;
-                height: 20px;
+                width: 18px;
+                height: 18px;
                 border: 2px solid rgba(255, 255, 255, 0.3);
                 border-top: 2px solid white;
                 border-radius: 50%;
@@ -497,41 +442,9 @@ const resetForm = () => {
     }
 }
 
-@keyframes successPulse {
-    0%,
-    100% {
-        transform: scale(1);
-        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
-    }
-}
-
-@keyframes errorShake {
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    75% {
-        transform: translateX(5px);
-    }
-}
-
 @media screen and (min-width: 768px) {
     .Contact {
         &__form {
-            &__topic {
-                &:nth-child(1),
-                &:nth-child(2) {
-                    flex: 1;
-                }
-            }
-
             form {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
@@ -552,8 +465,6 @@ const resetForm = () => {
             &__button {
                 grid-column: span 2;
                 justify-self: start;
-                width: auto;
-                min-width: 200px;
             }
         }
     }
@@ -562,27 +473,14 @@ const resetForm = () => {
 @media screen and (min-width: 992px) {
     .Contact {
         &__form {
-            flex: 1;
-            align-self: flex-start;
-
             form {
                 display: flex;
                 flex-direction: column;
-                gap: 1.5rem;
             }
 
             &__button {
-                width: auto;
                 align-self: flex-start;
             }
-        }
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .Contact {
-        &__form {
-            padding: 3rem;
         }
     }
 }
