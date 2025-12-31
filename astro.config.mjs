@@ -18,10 +18,6 @@ export default defineConfig({
     mode: "standalone",
   }),
 
-  image: {
-    domains: ["admin.laure-ferrando.com"],
-  },
-
   vite: {
     css: {
       preprocessorOptions: {
