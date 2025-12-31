@@ -94,13 +94,15 @@ try {
 
 <style lang="scss">
     .Boutique {
+        max-width: $max-content-width;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
         min-height: 100vh;
 
-        
         &__debug {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 2rem;
             margin-bottom: 2rem;
             
@@ -108,40 +110,37 @@ try {
                 summary {
                     cursor: pointer;
                     padding: 1rem;
-                    background: #f8f9fa;
-                    border-radius: 8px;
+                    font-family: $font-family-text;
+                    background: rgba(0, 0, 0, 0.03);
+                    border-radius: 4px;
                     font-weight: 600;
-                    transition: all 0.3s ease;
-                    
-                    &:hover {
-                        background: #e9ecef;
-                        transform: translateY(-1px);
-                    }
                 }
                 
                 pre {
                     margin-top: 1rem;
                     padding: 1.5rem;
-                    background: #f8f9fa;
-                    border-radius: 8px;
+                    font-family: monospace;
+                    background: rgba(0, 0, 0, 0.03);
+                    border-radius: 4px;
                     overflow-x: auto;
                     font-size: 0.9rem;
-                    border: 1px solid #e9ecef;
+                    border: 1px solid rgba(0, 0, 0, 0.1);
                 }
             }
         }
         
         &__warning {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            border: none;
+            background: #fff3cd;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             color: #856404;
+            font-family: $font-family-text;
             padding: 2rem;
             margin: 2rem auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
             max-width: 600px;
             
             h3 {
+                font-family: $font-family-titles;
                 margin: 0 0 1rem 0;
                 font-size: 1.3rem;
                 font-weight: 600;
@@ -158,70 +157,49 @@ try {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
-            max-width: $max-content-width;
-            margin: 0 auto;
             
             &__product {
                 background: white;
-                border-radius: 16px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
-                transition: all 0.3s ease;
+                transition: opacity 0.2s ease;
                 text-decoration: none;
                 color: inherit;
-                position: relative;
-                
-                &::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 4px;
-                    background: linear-gradient(90deg, var(--accent-color), #007bff, var(--accent-color));
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                }
                 
                 &:hover {
-                    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-                    
-                    &::before {
-                        opacity: 1;
-                    }
-                    
-                    .Boutique__products__product__image {
-                        transform: scale(1.05);
-                    }
+                    opacity: 0.9;
                 }
                 
                 &__image {
                     width: 100%;
                     height: 280px;
                     object-fit: cover;
-                    transition: transform 0.3s ease;
-                    overflow: hidden;
                 }
                 
                 &__title {
-                    font-size: 1.2rem;
+                    font-family: $font-family-text;
+                    font-size: 1.125rem;
                     margin: 1.5rem 1.5rem 0.5rem 1.5rem;
                     font-weight: 600;
-                    color: var(--text-color);
+                    color: $text-color;
                     line-height: 1.3;
                 }
                 
                 &__price {
-                    font-size: 1.3rem;
+                    font-family: $font-family-text;
+                    font-size: 1.25rem;
                     font-weight: 700;
-                    color: var(--accent-color);
+                    color: $accent-color;
                     margin: 0 1.5rem 1.5rem 1.5rem;
                 }
                 
                 &__weight {
+                    font-family: $font-family-text;
                     font-size: 0.95rem;
                     font-weight: 400;
-                    color: #6c757d;
+                    color: $text-color;
+                    opacity: 0.7;
                     margin: 0 1.5rem 1rem 1.5rem;
                 }
             }
@@ -230,8 +208,6 @@ try {
 
     @media screen and (min-width: 640px) {
         .Boutique {
-            padding: 3rem 2rem;
-            
             &__products {
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
                 gap: 2.5rem;
@@ -242,17 +218,17 @@ try {
                     }
                     
                     &__title {
-                        font-size: 1.3rem;
-                        margin: 2rem 2rem 1rem 2rem;
+                        font-size: 1.25rem;
+                        margin: 1.5rem 1.5rem 0.5rem 1.5rem;
                     }
                     
                     &__price {
                         font-size: 1.4rem;
-                        margin: 0 2rem 2rem 2rem;
+                        margin: 0 1.5rem 1.5rem 1.5rem;
                     }
                     
                     &__weight {
-                        margin: 0 2rem 1.5rem 2rem;
+                        margin: 0 1.5rem 1.5rem 1.5rem;
                     }
                 }
             }
@@ -261,8 +237,6 @@ try {
 
     @media screen and (min-width: 992px) {
         .Boutique {
-            padding: 4rem 3rem;
-            
             &__products {
                 grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
                 gap: 3rem;
@@ -272,15 +246,6 @@ try {
                         height: 350px;
                     }
                 }
-            }
-        }
-    }
-
-    @media screen and (min-width: 1200px) {
-        .Boutique {
-            padding: 5rem 4rem;
-            
-            &__products {
             }
         }
     }

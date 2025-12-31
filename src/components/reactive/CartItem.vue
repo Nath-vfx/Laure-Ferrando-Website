@@ -75,7 +75,7 @@ const updateQuantity = () => {
 
 <style lang="scss" scoped>
 .Article {
-    border-bottom: 1px solid rgba(232, 232, 232, 0.6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 1.25rem 0;
     display: flex;
     justify-content: space-between;
@@ -89,9 +89,9 @@ const updateQuantity = () => {
             width: 96px;
             height: 96px;
             object-fit: cover;
-            background: #fafafa;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         &__infos {
             display: flex;
@@ -99,26 +99,28 @@ const updateQuantity = () => {
             gap: 0.25rem;
             
             &__title {
+                font-family: $font-family-text;
                 font-size: 1rem;
                 font-weight: 600;
-                color: #2d2d2d;
+                color: $text-color;
                 line-height: 1.4;
             }
 
             &__price {
-                color: #b39966;
+                font-family: $font-family-text;
+                color: $accent-color;
                 font-weight: 700;
             }
             &__remove {
                 display: inline-block;
                 margin-top: 0.5rem;
                 cursor: pointer;
-                color: #b39966;
+                font-family: $font-family-text;
+                color: $accent-color;
                 font-weight: 500;
-                transition: color 0.2s ease;
+                transition: opacity 0.2s ease;
                 &:hover {
-                    text-decoration: underline;
-                    color: #9f885b;
+                    opacity: 0.7;
                 }
             }
         }
@@ -131,38 +133,38 @@ const updateQuantity = () => {
             gap: 0.25rem;
             
             label {
+                font-family: $font-family-text;
                 font-size: 0.9rem;
-                color: #4a4a4a;
+                color: $text-color;
+                opacity: 0.8;
                 font-weight: 500;
             }
             input[type="number"] {
-                padding: 1rem 1.25rem;
-                border: 2px solid #e8e8e8;
-                border-radius: 12px;
+                padding: 0.75rem 1rem;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                border-radius: 4px;
                 font-size: 1rem;
-                background-color: #fff;
-                transition: all 0.3s ease;
-                font-family: inherit;
+                font-family: $font-family-text;
+                background-color: white;
+                color: $text-color;
+                transition: border-color 0.2s ease;
                 
                 &:focus {
                     outline: none;
-                    border-color: #b39966;
-                    box-shadow: 0 0 0 3px rgba(179, 153, 102, 0.1);
-                }
-                
-                &:hover {
-                    border-color: #d0d0d0;
+                    border-color: $accent-color;
                 }
             }
             &__update {
                 margin-top: 0.5rem;
                 padding: 0.5rem;
-                background-color: #b39966;
-                color: #f3f1ed;
+                background-color: $accent-color;
+                color: white;
+                font-family: $font-family-text;
                 border: none;
+                border-radius: 4px;
                 cursor: pointer;
                 font-size: 0.8rem;
-                transition: opacity 0.3s ease;
+                transition: opacity 0.2s ease;
 
                 &:disabled {
                     opacity: 0.5;
@@ -170,7 +172,7 @@ const updateQuantity = () => {
                 }
 
                 &:not(:disabled):hover {
-                    opacity: 0.9;
+                    opacity: 0.85;
                 }
             }
         }

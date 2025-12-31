@@ -420,9 +420,9 @@ const handleSubmit = async () => {
 <style lang="scss" scoped>
 .checkout {
     max-width: 1280px;
-    margin: 4rem auto;
+    margin: 3rem auto;
     padding: 0 2rem;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: $font-family-text;
 
     @media screen and (max-width: 768px) {
         margin: 2rem auto;
@@ -432,11 +432,10 @@ const handleSubmit = async () => {
     &__container {
         h1 {
             margin-bottom: 3rem;
+            font-family: $font-family-titles;
             font-size: 2.5rem;
-            font-weight: 700;
-            color: #1a1a1a;
+            color: $text-color;
             text-align: center;
-            letter-spacing: -0.025em;
 
             @media screen and (max-width: 768px) {
                 font-size: 2rem;
@@ -461,45 +460,24 @@ const handleSubmit = async () => {
 
     &__section {
         margin-bottom: 2rem;
-        padding: 2.5rem;
-        background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(179, 153, 102, 0.1);
-        transition: all 0.3s ease;
-
-        &:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            transform: translateY(-2px);
-        }
+        padding: 2rem;
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
         @media screen and (max-width: 768px) {
-            padding: 2rem;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
         h2 {
-            margin-bottom: 2rem;
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #2d2d2d;
-            position: relative;
-            padding-bottom: 0.75rem;
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 60px;
-                height: 3px;
-                background: linear-gradient(90deg, #b39966, #d4c49a);
-                border-radius: 2px;
-            }
+            margin-bottom: 1.5rem;
+            font-family: $font-family-titles;
+            font-size: 1.5rem;
+            color: $accent-color;
 
             @media screen and (max-width: 768px) {
-                font-size: 1.5rem;
-                margin-bottom: 1.5rem;
+                font-size: 1.25rem;
             }
         }
     }
@@ -523,71 +501,60 @@ const handleSubmit = async () => {
     &__form-field {
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 0.5rem;
 
         label {
-            font-size: 0.95rem;
+            font-family: $font-family-titles;
+            font-size: 1rem;
             font-weight: 500;
-            color: #4a4a4a;
-            letter-spacing: 0.025em;
+            color: $accent-color;
         }
 
         input {
-            padding: 1rem 1.25rem;
-            border: 2px solid #e8e8e8;
-            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
             font-size: 1rem;
-            background-color: #fff;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            font-family: $font-family-text;
+            background-color: white;
+            color: $text-color;
+            transition: border-color 0.2s ease;
 
             &::placeholder {
-                color: #999;
+                color: rgba(0, 0, 0, 0.4);
             }
 
             &:focus {
                 outline: none;
-                border-color: #b39966;
-                box-shadow: 0 0 0 3px rgba(179, 153, 102, 0.1);
-                transform: translateY(-1px);
-            }
-
-            &:hover {
-                border-color: #d0d0d0;
+                border-color: $accent-color;
             }
         }
     }
 
     &__toggle {
-        margin: 2.5rem 0;
+        margin: 2rem 0;
         
         &-label {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
-            border-radius: 12px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-
-            &:hover {
-                border-color: rgba(179, 153, 102, 0.2);
-                transform: translateY(-1px);
-            }
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 4px;
         }
 
         &-text {
+            font-family: $font-family-text;
             font-size: 1rem;
             font-weight: 500;
-            color: #4a4a4a;
+            color: $text-color;
         }
 
         input[type="checkbox"] {
             width: 20px;
             height: 20px;
-            accent-color: #b39966;
+            accent-color: $accent-color;
             cursor: pointer;
         }
     }
@@ -605,38 +572,23 @@ const handleSubmit = async () => {
     }
 
     &__summary {
-        background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-        padding: 2.5rem;
-        border-radius: 16px;
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(179, 153, 102, 0.1);
+        background: white;
+        padding: 2rem;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
         @media screen and (max-width: 768px) {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         h2 {
-            margin-bottom: 2rem;
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #2d2d2d;
-            position: relative;
-            padding-bottom: 0.75rem;
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 60px;
-                height: 3px;
-                background: linear-gradient(90deg, #b39966, #d4c49a);
-                border-radius: 2px;
-            }
+            margin-bottom: 1.5rem;
+            font-family: $font-family-titles;
+            font-size: 1.5rem;
+            color: $accent-color;
 
             @media screen and (max-width: 768px) {
-                font-size: 1.5rem;
-                margin-bottom: 1.5rem;
+                font-size: 1.25rem;
             }
         }
 
@@ -655,15 +607,7 @@ const handleSubmit = async () => {
             justify-content: space-between;
             align-items: flex-start;
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(232, 232, 232, 0.6);
-            transition: background-color 0.2s ease;
-
-            &:hover {
-                background-color: rgba(179, 153, 102, 0.03);
-                margin: 0 -0.5rem;
-                padding: 1rem 0.5rem;
-                border-radius: 8px;
-            }
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
             &:last-child {
                 border-bottom: none;
@@ -677,25 +621,25 @@ const handleSubmit = async () => {
             }
 
             &__name {
+                font-family: $font-family-text;
                 font-weight: 600;
-                color: #2d2d2d;
+                color: $text-color;
                 font-size: 1rem;
                 line-height: 1.4;
             }
 
             &__quantity {
+                font-family: $font-family-text;
                 font-size: 0.9rem;
-                color: #666;
+                color: $text-color;
+                opacity: 0.7;
                 font-weight: 500;
-                background-color: rgba(179, 153, 102, 0.1);
-                padding: 0.2rem 0.6rem;
-                border-radius: 20px;
-                width: fit-content;
             }
 
             &__price {
+                font-family: $font-family-text;
                 font-weight: 700;
-                color: #b39966;
+                color: $accent-color;
                 font-size: 1.1rem;
                 margin-left: 1rem;
             }
@@ -705,33 +649,31 @@ const handleSubmit = async () => {
             width: 100%;
             margin: 1.5rem 0;
             border-collapse: collapse;
-            background-color: rgba(250, 250, 250, 0.5);
-            border-radius: 12px;
-            overflow: hidden;
 
             tr {
                 height: 56px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             
                 td {
-                    padding: 0 1.25rem;
+                    padding: 0 1rem;
+                    font-family: $font-family-text;
                     font-weight: 500;
-                    color: #4a4a4a;
+                    color: $text-color;
 
                     &:last-child {
                         text-align: right;
                         font-weight: 600;
-                        color: #2d2d2d;
                     }
                 }
 
                 &.total {
-                    background: linear-gradient(135deg, #b39966 0%, #d4c49a 100%);
+                    background: $accent-color;
+                    border-bottom: none;
                     
                     td {
                         color: white;
                         font-weight: 700;
                         font-size: 1.1rem;
-                        border-top: none;
                     }
                 }
             }
@@ -740,35 +682,28 @@ const handleSubmit = async () => {
 
     &__submit {
         width: 100%;
-        padding: 1.25rem 2rem;
-        background: linear-gradient(135deg, #b39966 0%, #d4c49a 100%);
+        padding: 1rem 2.5rem;
+        background: $accent-color;
         color: white;
+        font-family: $font-family-text;
         border: none;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(179, 153, 102, 0.3);
-        letter-spacing: 0.025em;
-        text-transform: uppercase;
-        font-family: inherit;
-        position: relative;
-        overflow: hidden;
+        transition: opacity 0.2s ease;
+        border-radius: 4px;
 
         &:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(179, 153, 102, 0.4);
+            opacity: 0.85;
         }
 
         &:active:not(:disabled) {
-            transform: translateY(0);
+            opacity: 0.7;
         }
 
         &:disabled {
-            opacity: 0.8;
+            opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
         &-loading {
@@ -779,8 +714,8 @@ const handleSubmit = async () => {
         }
 
         &-spinner {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top: 2px solid white;
             border-radius: 50%;
@@ -789,7 +724,6 @@ const handleSubmit = async () => {
 
         @media screen and (max-width: 768px) {
             padding: 1rem 1.5rem;
-            font-size: 1rem;
         }
     }
 
@@ -800,9 +734,9 @@ const handleSubmit = async () => {
         margin: 3rem auto;
         padding: 3rem;
         text-align: center;
-        background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
         @media screen and (max-width: 768px) {
             margin: 2rem auto;
@@ -811,9 +745,9 @@ const handleSubmit = async () => {
 
         h2 {
             margin: 1.5rem 0;
+            font-family: $font-family-titles;
             font-size: 1.75rem;
-            font-weight: 700;
-            color: #2d2d2d;
+            color: $text-color;
 
             @media screen and (max-width: 768px) {
                 font-size: 1.5rem;
@@ -821,9 +755,11 @@ const handleSubmit = async () => {
         }
 
         p {
-            color: #666;
+            font-family: $font-family-text;
+            color: $text-color;
+            opacity: 0.8;
             margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            font-size: 1.125rem;
             line-height: 1.6;
         }
     }
@@ -833,14 +769,12 @@ const handleSubmit = async () => {
             width: 80px;
             height: 80px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #b39966 0%, #d4c49a 100%);
+            background: $accent-color;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 20px rgba(179, 153, 102, 0.3);
-            animation: processingPulse 2s ease-in-out infinite;
         }
 
         &-spinner {
@@ -853,8 +787,10 @@ const handleSubmit = async () => {
         }
 
         &-redirect {
+            font-family: $font-family-text;
             font-style: italic;
-            color: #888;
+            color: $text-color;
+            opacity: 0.6;
             font-size: 1rem;
             margin-top: 1rem;
         }
@@ -864,14 +800,14 @@ const handleSubmit = async () => {
             width: 100%;
             max-width: 400px;
             height: 6px;
-            background-color: rgba(179, 153, 102, 0.2);
+            background-color: rgba(0, 0, 0, 0.1);
             border-radius: 3px;
             overflow: hidden;
         }
 
         &-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #b39966, #d4c49a);
+            background: $accent-color;
             border-radius: 3px;
             animation: progressBar 5s linear forwards;
             transform: translateX(-100%);
@@ -883,7 +819,7 @@ const handleSubmit = async () => {
             width: 80px;
             height: 80px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            background: #4CAF50;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -891,64 +827,50 @@ const handleSubmit = async () => {
             justify-content: center;
             font-size: 2.5rem;
             font-weight: bold;
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
-            animation: successPulse 2s ease-in-out infinite;
         }
 
         &-details {
             margin: 2.5rem 0;
             padding: 2rem;
-            background-color: white;
-            border-radius: 16px;
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: 4px;
             text-align: left;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(232, 232, 232, 0.8);
+
+            h3, h4 {
+                font-family: $font-family-titles;
+                color: $accent-color;
+            }
 
             h3 {
                 margin-bottom: 1.5rem;
                 font-size: 1.3rem;
-                font-weight: 600;
-                color: #2d2d2d;
             }
 
             h4 {
                 margin: 2rem 0 1rem;
                 font-size: 1.15rem;
-                font-weight: 600;
-                color: #2d2d2d;
-                position: relative;
-                padding-bottom: 0.5rem;
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 40px;
-                    height: 2px;
-                    background: #b39966;
-                    border-radius: 1px;
-                }
             }
 
             p {
                 margin: 0.75rem 0;
-                color: #555;
+                font-family: $font-family-text;
+                color: $text-color;
                 font-size: 1rem;
                 line-height: 1.5;
+                opacity: 1;
             }
         }
 
         &-address {
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 2px solid rgba(232, 232, 232, 0.8);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         &-items {
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 2px solid rgba(232, 232, 232, 0.8);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
 
             ul {
                 list-style: none;
@@ -963,14 +885,8 @@ const handleSubmit = async () => {
             align-items: center;
             padding: 1rem;
             margin: 0.5rem 0;
-            background-color: rgba(250, 250, 250, 0.8);
-            border-radius: 10px;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background-color: rgba(179, 153, 102, 0.05);
-                transform: translateX(5px);
-            }
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: 4px;
 
             &:last-child {
                 border-bottom: none;
@@ -983,23 +899,23 @@ const handleSubmit = async () => {
             }
 
             &-name {
+                font-family: $font-family-text;
                 font-weight: 600;
-                color: #2d2d2d;
+                color: $text-color;
             }
 
             &-quantity {
+                font-family: $font-family-text;
                 font-size: 0.9rem;
-                color: #666;
-                background-color: rgba(179, 153, 102, 0.1);
-                padding: 0.2rem 0.6rem;
-                border-radius: 20px;
-                width: fit-content;
+                color: $text-color;
+                opacity: 0.7;
                 font-weight: 500;
             }
 
             &-price {
+                font-family: $font-family-text;
                 font-weight: 700;
-                color: #b39966;
+                color: $accent-color;
                 font-size: 1.1rem;
             }
         }
@@ -1010,21 +926,18 @@ const handleSubmit = async () => {
 
         &-button {
             display: inline-block;
-            padding: 1.25rem 2.5rem;
-            background: linear-gradient(135deg, #b39966 0%, #d4c49a 100%);
+            padding: 1rem 2.5rem;
+            background: $accent-color;
             color: white;
+            font-family: $font-family-text;
             text-decoration: none;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            border-radius: 4px;
+            transition: opacity 0.2s ease;
             font-weight: 600;
-            font-size: 1.05rem;
-            letter-spacing: 0.025em;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(179, 153, 102, 0.3);
+            font-size: 1rem;
 
             &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(179, 153, 102, 0.4);
+                opacity: 0.85;
             }
 
             @media screen and (max-width: 768px) {
@@ -1038,7 +951,7 @@ const handleSubmit = async () => {
             width: 80px;
             height: 80px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            background: #f44336;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -1046,29 +959,23 @@ const handleSubmit = async () => {
             justify-content: center;
             font-size: 2.5rem;
             font-weight: bold;
-            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
-            animation: errorShake 0.5s ease-in-out;
         }
 
         &-button {
             margin-top: 1.5rem;
-            padding: 1.25rem 2rem;
-            background: linear-gradient(135deg, #b39966 0%, #d4c49a 100%);
+            padding: 1rem 2.5rem;
+            background: $accent-color;
             color: white;
+            font-family: $font-family-text;
             border: none;
-            border-radius: 12px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s ease;
             font-weight: 600;
-            font-size: 1.05rem;
-            letter-spacing: 0.025em;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(179, 153, 102, 0.3);
-            font-family: inherit;
+            font-size: 1rem;
 
             &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(179, 153, 102, 0.4);
+                opacity: 0.85;
             }
 
             @media screen and (max-width: 768px) {
@@ -1081,61 +988,32 @@ const handleSubmit = async () => {
 .checkout__loading {
     text-align: center;
     padding: 5rem 2rem;
-    color: #666;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
 
     p {
-        font-size: 1.2rem;
+        font-family: $font-family-text;
+        font-size: 1.125rem;
         margin: 0;
-        font-weight: 500;
-        color: #4a4a4a;
+        color: $text-color;
+        opacity: 0.8;
     }
 }
 
 .checkout__loader {
     width: 60px;
     height: 60px;
-    border: 4px solid rgba(179, 153, 102, 0.1);
-    border-top: 4px solid #b39966;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid $accent-color;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    box-shadow: 0 4px 15px rgba(179, 153, 102, 0.2);
 }
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-@keyframes successPulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
-    }
-}
-
-@keyframes errorShake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-@keyframes processingPulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 6px 20px rgba(179, 153, 102, 0.3);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow: 0 8px 25px rgba(179, 153, 102, 0.4);
-    }
 }
 
 @keyframes progressBar {
@@ -1147,9 +1025,8 @@ const handleSubmit = async () => {
     }
 }
 
-// Focus styles for accessibility
 *:focus-visible {
-    outline: 2px solid #b39966;
+    outline: 2px solid $accent-color;
     outline-offset: 2px;
 }
 </style>

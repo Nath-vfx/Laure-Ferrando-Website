@@ -81,22 +81,18 @@ try {
 
 <style lang="scss">
     .Product {
-        max-width: 1128px;
-        margin: 4rem auto;
+        max-width: 1200px;
+        margin: 3rem auto;
         display: flex;
         flex-direction: row-reverse;
-        width: max-content;
-        gap: 6.75rem;
-        padding: 2rem;
+        gap: 4rem;
+        padding: 3rem 1.5rem;
 
         &__error {
-            background: white;
-            border-radius: 16px;
             padding: 3rem 2rem;
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
             margin: 4rem auto;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -107,100 +103,115 @@ try {
                 margin: 0 auto 1.5rem auto;
             }
             &__title {
-                color: #b71c1c;
-                font-size: 1.8rem;
-                font-weight: 600;
+                font-family: $font-family-titles;
+                color: $text-color;
+                font-size: 1.75rem;
                 margin-bottom: 1rem;
             }
             &__msg {
-                color: #a94442;
+                font-family: $font-family-text;
+                color: $text-color;
+                opacity: 0.8;
                 margin: 0 auto 2rem auto;
                 line-height: 1.6;
+                font-size: 1.125rem;
             }
             &__back {
+                font-family: $font-family-text;
                 color: white;
-                background: linear-gradient(135deg, var(--accent-color), #007bff);
-                padding: 1rem 2rem;
-                border-radius: 8px;
+                background: $accent-color;
+                padding: 1rem 2.5rem;
+                border-radius: 4px;
                 text-decoration: none;
                 font-weight: 600;
                 display: inline-block;
-                transition: all 0.3s ease;
+                transition: opacity 0.2s ease;
+                
                 &:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                    opacity: 0.85;
+                }
+                
+                &:active {
+                    opacity: 0.7;
                 }
             }
         }
 
         &__container {
-            max-width: 336px;
+            flex: 1;
+            max-width: 500px;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
+            
             &__title {
-                font-size: 2.2rem;
-                font-family: "Lato", sans-serif;
-                font-weight: 600;
-                color: var(--text-color);
-                line-height: 1.2;
+                font-size: 2rem;
+                font-family: $font-family-titles;
+                color: $text-color;
+                line-height: 1.3;
+                
+                @media (max-width: 768px) {
+                    font-size: 1.75rem;
+                }
             }
+            
             &__price {
-                font-size: 1.8rem;
-                font-family: "Lato", sans-serif;
+                font-size: 1.5rem;
+                font-family: $font-family-text;
                 font-weight: 700;
-                color: var(--accent-color);
+                color: $accent-color;
             }
+            
             &__weight {
                 font-size: 1rem;
-                color: #6c757d;
+                font-family: $font-family-text;
+                color: $text-color;
+                opacity: 0.7;
                 font-weight: 500;
             }
+            
             &__boutons {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
                 gap: 1rem;
-                &__bouton {
-                    padding: 1rem 0;
-                    cursor: pointer;
-                    border: none;
-                    font-size: 1rem;
-                    color: #f3f1ed;
-                    &:first-child {
-                        background-color: #b39966;
-                    }
-                    &:last-child {
-                        background-color: #342d1f;
-                    }
-                }
+                margin: 1rem 0;
             }
+            
             &__desc {
-                font-family: "Lato", sans-serif;
-                font-size: 1.1rem;
-                font-weight: 400;
-                line-height: 1.7;
-                color: #495057;
+                font-family: $font-family-text;
+                font-size: 1rem;
+                line-height: 1.8;
+                color: $text-color;
+                text-align: justify;
+                
+                @media (max-width: 768px) {
+                    text-align: left;
+                }
             }
         }
         &__carrousel {
+            flex: 1;
+            
             &__main {
-                width: 548px;
-                height: 496px;
+                width: 100%;
+                max-width: 600px;
+                height: auto;
                 object-fit: contain;
-                border-radius: 12px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
         }
+        
         @media screen and (max-width: 992px) {
             flex-direction: column-reverse;
             justify-content: flex-start;
             align-items: center;
             gap: 2rem;
-            max-width: 100%;
+            padding: 2rem 1.5rem;
+            
             &__container {
                 max-width: 100%;
-                padding: 1rem;
             }
         }
     }

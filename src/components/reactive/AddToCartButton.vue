@@ -48,32 +48,31 @@ const addToCart = () => {
 }
 
 .Bouton {
-    padding: 1rem 2rem;
+    padding: 1rem 2.5rem;
     cursor: pointer;
     border: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
+    font-family: $font-family-text;
     color: white;
-    background: linear-gradient(135deg, var(--accent-color) 0%, #007bff 100%);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    background: $accent-color;
+    border-radius: 4px;
+    transition: opacity 0.2s ease;
     width: 100%;
     
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        opacity: 0.85;
     }
     
     &:active {
-        transform: translateY(0);
+        opacity: 0.7;
     }
 }
 
 .Feedback {
     font-size: 0.95rem;
-    color: #198754; /* green */
+    font-family: $font-family-text;
+    color: #198754;
     font-weight: 600;
 }
 </style>
