@@ -17,4 +17,18 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+
+  image: {
+    domains: ["admin.laure-ferrando.com"],
+  },
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "/src/styles/_variables.scss";`,
+        },
+      },
+    },
+  },
 });

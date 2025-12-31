@@ -3,7 +3,8 @@
 ---
 
 <footer class="Footer">
-    <nav class="Footer__navigation">
+    <div class="Footer__container">
+        <nav class="Footer__navigation">
         <ul class="Footer__navigation__list">
             <li class="Footer__navigation__list__item">
                 <a href="/">Accueil</a>
@@ -54,6 +55,7 @@
         </ul>
     </div>
     <div class="Footer__copyright">© 2025 Laure Ferrando</div>
+    </div>
 </footer>
 
 <style lang="scss">
@@ -61,12 +63,19 @@
         border-top: 1px solid var(--text-color);
         margin: 1rem 0;
         padding: 1rem 2rem;
+        &__container {
+            max-width: $max-content-width;
+            margin: 0 auto;
+        }
         &__social,
         &__legals {
             &__list {
                 &__item {
                     font-weight: 300;
                     margin: 1rem 0;
+                    &:hover a {
+                        text-decoration: underline;
+                    }
                 }
             }
         }
@@ -79,6 +88,9 @@
             &__list {
                 &__item {
                     margin: 1rem 0;
+                    &:hover a {
+                        text-decoration: underline;
+                    }
                 }
             }
         }

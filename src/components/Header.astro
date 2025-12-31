@@ -81,6 +81,8 @@ import CartButton from "./reactive/CartButton.vue";
 <style lang="scss">
     .Header {
         padding: 0 2rem;
+        max-width: $max-content-width;
+        margin: 0 auto;
         &__content {
             display: flex;
             padding-top: 1rem;
@@ -124,6 +126,9 @@ import CartButton from "./reactive/CartButton.vue";
                         transform: translateX(100%);
                         transition-delay: 0.3s;
                         z-index: 100;
+                        &:hover {
+                            text-decoration: underline;
+                        }
                         &:nth-child(1) {
                             position: relative;
                             cursor: pointer;
@@ -249,6 +254,9 @@ import CartButton from "./reactive/CartButton.vue";
                                     align-items: center;
                                     gap: 0.5rem;
                                     position: relative;
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
 
                                     &::after {
                                         content: url("/src/assets/down-arrow.svg");

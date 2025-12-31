@@ -132,13 +132,13 @@ export default {
 .masonry-container {
   width: 100%;
   padding: 2rem 1rem;
-  max-width: 1400px;
+  max-width: $max-content-width;
   margin: 0 auto;
 }
 
 .masonry-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
   grid-auto-rows: 15px;
 
@@ -275,12 +275,6 @@ img {
   }
 }
 
-// Responsive optimisé pour 6 colonnes
-@media (min-width: 1400px) {
-  .masonry-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
 
 @media (max-width: 480px) {
   .masonry-container {

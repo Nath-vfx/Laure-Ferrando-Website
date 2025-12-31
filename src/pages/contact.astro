@@ -71,6 +71,8 @@ import ContactForm from "../components/reactive/ContactForm.vue";
     .Contact {
         padding: 1.5rem;
         min-height: 100vh;
+        max-width: $max-content-width;
+        margin: 0 auto;
 
         &__infos {
             margin-bottom: 3rem;
@@ -177,10 +179,8 @@ import ContactForm from "../components/reactive/ContactForm.vue";
     @media screen and (min-width: 992px) {
         .Contact {
             display: flex;
-            max-width: 1400px;
             margin: 4rem auto;
             gap: 4rem;
-            padding: 3rem;
 
             &__infos {
                 flex: 1;
