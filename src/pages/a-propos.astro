@@ -2,52 +2,61 @@
 import Layout from "../layouts/Layout.astro";
 import { Fetcher } from "../utils/fetchUtils.js";
 export const prerender = true;
+
 const fetcher = new Fetcher();
-const data = await fetcher.fetchData(`/wp-json/wp/v2/pages/30556`);
+// Récupération des données de la page Atelier
+let pageData = null;
+try {
+    pageData = await fetcher.fetchData("/wp-json/wp/v2/pages/30556");
+} catch (err) {
+    console.error("Erreur lors de la récupération de la page À propos:", err);
+}
 ---
 
 <Layout title="À propos">
     <main class="About">
-        {data && data.content && data.content.rendered ? (
-            <>
-                <h1 class="About__title">
-                    {data.title?.rendered || "À propos"}
-                </h1>
-                <div
-                    class="About__content"
-                    set:html={data.content.rendered}
-                />
-            </>
-        ) : (
-            <div class="EmptyState">
-                <div class="EmptyState__container">
-                    <div class="EmptyState">
-                        <svg
-                            width="64"
-                            height="64"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                        >
-                            <rect
-                                x="3"
-                                y="3"
-                                width="18"
-                                height="18"
-                                rx="2"
-                                ry="2"
-                            ></rect>
-                            <line x1="3" y1="9" x2="21" y2="9"></line>
-                            <line x1="9" y1="21" x2="9" y2="9"></line>
-                        </svg>
+        {
+            pageData && pageData.content && pageData.content.rendered ? (
+                <>
+                    <h1 class="About__title">
+                        {pageData.title?.rendered || "À propos"}
+                    </h1>
+                    <div
+                        class="About__content"
+                        set:html={pageData.content.rendered}
+                    />
+                </>
+            ) : (
+                <div class="EmptyState">
+                    <div class="EmptyState__container">
+                        <div class="EmptyState">
+                            <svg
+                                width="64"
+                                height="64"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                            >
+                                <rect
+                                    x="3"
+                                    y="3"
+                                    width="18"
+                                    height="18"
+                                    rx="2"
+                                    ry="2"
+                                />
+                                <line x1="3" y1="9" x2="21" y2="9" />
+                                <line x1="9" y1="21" x2="9" y2="9" />
+                            </svg>
+                        </div>
+                        <h2 class="EmptyState__message">
+                            Aucune information disponible pour le moment.
+                        </h2>
                     </div>
-                    <h2 class="EmptyState__message">
-                        Aucune information disponible pour le moment.
-                    </h2>
                 </div>
-            </div>
-        )}
+            )
+        }
     </main>
 </Layout>
 
@@ -56,55 +65,55 @@ const data = await fetcher.fetchData(`/wp-json/wp/v2/pages/30556`);
         max-width: 900px;
         margin: 0 auto;
         padding: 3rem 1.5rem;
-        
+
         &__title {
             font-family: var(--font-family-titles);
             font-size: 2.5rem;
             color: var(--text-color);
             margin-bottom: 2rem;
             text-align: center;
-            
+
             @media (max-width: 768px) {
                 font-size: 2rem;
             }
         }
-        
+
         &__content {
             font-family: var(--font-family-text);
             color: var(--text-color);
             line-height: 1.8;
-            
+
             :global(h2) {
                 font-family: var(--font-family-titles);
                 font-size: 1.75rem;
                 color: var(--accent-color);
                 margin-top: 2.5rem;
                 margin-bottom: 1.5rem;
-                
+
                 @media (max-width: 768px) {
                     font-size: 1.5rem;
                 }
             }
-            
+
             :global(p) {
                 font-size: 1.125rem;
                 margin-bottom: 1.25rem;
                 text-align: justify;
-                
+
                 @media (max-width: 768px) {
                     font-size: 1rem;
                     text-align: left;
                 }
             }
-            
+
             :global(figure) {
                 margin: 2rem 0;
-                
+
                 &.wp-block-image {
                     text-align: center;
                 }
             }
-            
+
             :global(img) {
                 max-width: 100%;
                 height: auto;
@@ -113,22 +122,22 @@ const data = await fetcher.fetchData(`/wp-json/wp/v2/pages/30556`);
             }
         }
     }
-    
+
     .EmptyState {
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 400px;
-        
+
         &__container {
             text-align: center;
         }
-        
+
         svg {
             color: var(--accent-color);
             margin-bottom: 1rem;
         }
-        
+
         &__message {
             font-family: var(--font-family-text);
             color: var(--text-color);
