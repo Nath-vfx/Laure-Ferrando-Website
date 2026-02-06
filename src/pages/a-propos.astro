@@ -1,15 +1,27 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ExpositionsCard from "../components/ExpositionsCard.astro";
 import { Fetcher } from "../utils/fetchUtils.js";
 export const prerender = true;
 
 const fetcher = new Fetcher();
-// Récupération des données de la page Atelier
+// Récupération des données de la page À propos
 let pageData = null;
 try {
     pageData = await fetcher.fetchData("/wp-json/wp/v2/pages/30556");
 } catch (err) {
     console.error("Erreur lors de la récupération de la page À propos:", err);
+}
+
+// Récupération des expositions
+let expositions = [];
+try {
+    const data = await fetcher.fetchData("/wp-json/wp/v2/exposition");
+    if (Array.isArray(data) && data.length > 0) {
+        expositions = data;
+    }
+} catch (err) {
+    console.error("Erreur lors de la récupération des expositions:", err);
 }
 ---
 
@@ -55,6 +67,26 @@ try {
                         </h2>
                     </div>
                 </div>
+            )
+        }
+
+        {
+            expositions.length > 0 && (
+                <section class="About__expositions">
+                    <h2 class="About__expositions__title">Expositions</h2>
+                    <div class="About__expositions__list">
+                        {expositions.map((expo) => (
+                            <ExpositionsCard
+                                title={expo.title?.rendered}
+                                description={expo.acf?.description}
+                                dateDebut={expo.acf?.date_de_debut}
+                                dateFin={expo.acf?.date_de_fin}
+                                adresse={expo.acf?.adresse}
+                                lienDuSite={expo.acf?.lien_du_site}
+                            />
+                        ))}
+                    </div>
+                </section>
             )
         }
     </main>
@@ -119,6 +151,27 @@ try {
                 height: auto;
                 border-radius: 4px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        &__expositions {
+            margin-top: 4rem;
+
+            &__title {
+                font-family: var(--font-family-titles);
+                font-size: 2rem;
+                color: var(--accent-color);
+                margin-bottom: 2rem;
+                text-align: center;
+
+                @media (max-width: 768px) {
+                    font-size: 1.75rem;
+                }
+            }
+
+            &__list {
+                display: grid;
+                gap: 2.5rem;
             }
         }
     }

@@ -1,0 +1,90 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    dateDebut: string;
+    dateFin: string;
+    adresse: string;
+    lienDuSite?: string;
+}
+
+const { title, description, dateDebut, dateFin, adresse, lienDuSite } = Astro.props;
+---
+
+<article class="ExpositionsCard">
+    <h3 class="ExpositionsCard__title" set:html={title} />
+    <p class="ExpositionsCard__dates">
+        Du {dateDebut} au {dateFin}
+    </p>
+    <p class="ExpositionsCard__address">
+        {adresse}
+    </p>
+    <p class="ExpositionsCard__description">
+        {description}
+    </p>
+    {lienDuSite && (
+        <a href={lienDuSite} target="_blank" rel="noopener noreferrer" class="ExpositionsCard__link">
+            Voir le site
+        </a>
+    )}
+</article>
+
+<style lang="scss">
+    .ExpositionsCard {
+        padding: 2rem;
+        border-left: 3px solid $accent-color;
+
+        &__title {
+            font-family: $font-family-titles;
+            font-size: 1.5rem;
+            color: $accent-color;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        &__dates {
+            font-family: $font-family-text;
+            font-size: 1rem;
+            font-weight: 600;
+            color: $text-color;
+            margin-bottom: 0.5rem;
+        }
+
+        &__address {
+            font-family: $font-family-text;
+            font-size: 0.95rem;
+            color: $text-color;
+            opacity: 0.8;
+            margin-bottom: 1.25rem;
+        }
+
+        &__description {
+            font-family: $font-family-text;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: $text-color;
+            text-align: justify;
+            margin-bottom: 1.5rem;
+
+            @media (max-width: 768px) {
+                text-align: left;
+            }
+        }
+
+        &__link {
+            display: inline-block;
+            font-family: $font-family-text;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: $accent-color;
+            text-decoration: none;
+            border-bottom: 1px solid $accent-color;
+            padding-bottom: 2px;
+            transition: opacity 0.2s ease;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+</style>
