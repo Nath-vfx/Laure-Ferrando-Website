@@ -8,31 +8,40 @@ const fetcher = new Fetcher();
 // Récupération des données de la page Contact
 let pageData = null;
 try {
-    pageData = await fetcher.fetchData('/wp-json/wp/v2/pages/30550');
+    pageData = await fetcher.fetchData("/wp-json/wp/v2/pages/30550");
 } catch (err) {
-    console.error('Erreur lors de la récupération de la page Contact:', err);
+    console.error("Erreur lors de la récupération de la page Contact:", err);
 }
 ---
 
 <Layout title="Contact">
     <main class="Contact">
         <section class="Contact__infos">
-            {pageData && pageData.content && pageData.content.rendered ? (
-                <div class="Contact__infos__topic">
-                    <h1 class="Contact__infos__topic__title" set:html={pageData.title?.rendered || "Contactez-moi"} />
-                    <div
-                        class="Contact__infos__topic__content"
-                        set:html={pageData.content.rendered}
-                    />
-                </div>
-            ) : (
-                <div class="Contact__infos__topic">
-                    <h1 class="Contact__infos__topic__title">Contactez-moi</h1>
-                    <p class="Contact__infos__topic__text">
-                        Contenu non disponible pour le moment.
-                    </p>
-                </div>
-            )}
+            {
+                pageData && pageData.content && pageData.content.rendered ? (
+                    <div class="Contact__infos__topic">
+                        <h1
+                            class="Contact__infos__topic__title"
+                            set:html={
+                                pageData.title?.rendered || "Contactez-moi"
+                            }
+                        />
+                        <div
+                            class="Contact__infos__topic__content"
+                            set:html={pageData.content.rendered}
+                        />
+                    </div>
+                ) : (
+                    <div class="Contact__infos__topic">
+                        <h1 class="Contact__infos__topic__title">
+                            Contactez-moi
+                        </h1>
+                        <p class="Contact__infos__topic__text">
+                            Contenu non disponible pour le moment.
+                        </p>
+                    </div>
+                )
+            }
             <div class="Contact__infos__topic">
                 <ul class="Contact__infos__topic__list">
                     <li class="Contact__infos__topic__list__item">
@@ -40,9 +49,9 @@ try {
                             Téléphone
                         </h2>
                         <a
-                            href="tel:0123456789"
+                            href="tel:0675699961"
                             class="Contact__infos__topic__list__item__link"
-                            >0123456789</a
+                            >06 75 69 99 61</a
                         >
                     </li>
                     <li class="Contact__infos__topic__list__item">
@@ -110,11 +119,11 @@ try {
                     font-family: $font-family-text;
                     color: $text-color;
                     opacity: 0.7;
-                    
+
                     a {
                         color: $accent-color;
                         text-decoration: none;
-                        
+
                         &:hover {
                             text-decoration: underline;
                         }
@@ -126,7 +135,7 @@ try {
                     font-size: 2.5rem;
                     color: $text-color;
                     margin-bottom: 2rem;
-                    
+
                     @media (max-width: 768px) {
                         font-size: 2rem;
                     }
@@ -139,18 +148,18 @@ try {
                     color: $text-color;
                     text-align: justify;
                     margin-bottom: 0;
-                    
+
                     @media (max-width: 768px) {
                         font-size: 1rem;
                         text-align: left;
                     }
                 }
-                
+
                 &__content {
                     font-family: $font-family-text;
                     color: $text-color;
                     line-height: 1.8;
-                    
+
                     :global(h2) {
                         font-family: $font-family-titles;
                         font-size: 1.5rem;
@@ -158,26 +167,26 @@ try {
                         margin-top: 2rem;
                         margin-bottom: 1rem;
                     }
-                    
+
                     :global(p) {
                         font-size: 1.125rem;
                         margin-bottom: 1rem;
                         text-align: justify;
-                        
+
                         @media (max-width: 768px) {
                             font-size: 1rem;
                             text-align: left;
                         }
                     }
-                    
+
                     :global(figure) {
                         margin: 1.5rem 0;
-                        
+
                         &.wp-block-image {
                             text-align: center;
                         }
                     }
-                    
+
                     :global(img) {
                         max-width: 100%;
                         height: auto;
@@ -204,7 +213,7 @@ try {
                             font-size: 1.125rem;
                             color: $text-color;
                             text-decoration: none;
-                            
+
                             &:hover {
                                 color: $accent-color;
                             }
