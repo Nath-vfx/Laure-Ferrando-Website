@@ -7,9 +7,9 @@ const fetcher = new Fetcher();
 // Récupération des données de la page Atelier
 let pageData = null;
 try {
-    pageData = await fetcher.fetchData('/wp-json/wp/v2/pages/30476');
+    pageData = await fetcher.fetchData("/wp-json/wp/v2/pages/30476");
 } catch (err) {
-    console.error('Erreur lors de la récupération de la page Atelier:', err);
+    console.error("Erreur lors de la récupération de la page Atelier:", err);
 }
 
 // Récupération des cours
@@ -17,13 +17,13 @@ let cours = [];
 let coursError = null;
 
 try {
-    const data = await fetcher.fetchData('/wp-json/wp/v2/cours');
+    const data = await fetcher.fetchData("/wp-json/wp/v2/cours");
     if (Array.isArray(data) && data.length > 0) {
         cours = data;
     }
 } catch (err) {
     coursError = "Impossible de charger les cours pour le moment.";
-    console.error('Erreur lors de la récupération des cours:', err);
+    console.error("Erreur lors de la récupération des cours:", err);
 }
 ---
 
@@ -31,22 +31,33 @@ try {
     <main class="Atelier">
         <div class="Atelier__infos">
             <div class="Atelier__infos__aside">
-                {pageData && pageData.content && pageData.content.rendered ? (
-                    <div class="Atelier__infos__topic">
-                        <h1 class="Atelier__infos__topic__title" set:html={pageData.title?.rendered || "L'atelier"} />
-                        <div
-                            class="Atelier__infos__topic__content"
-                            set:html={pageData.content.rendered}
-                        />
-                    </div>
-                ) : (
-                    <div class="Atelier__infos__topic">
-                        <h1 class="Atelier__infos__topic__title">L'atelier</h1>
-                        <p class="Atelier__infos__topic__text">
-                            Contenu non disponible pour le moment.
-                        </p>
-                    </div>
-                )}
+                {
+                    pageData &&
+                    pageData.content &&
+                    pageData.content.rendered ? (
+                        <div class="Atelier__infos__topic">
+                            <h1
+                                class="Atelier__infos__topic__title"
+                                set:html={
+                                    pageData.title?.rendered || "L'atelier"
+                                }
+                            />
+                            <div
+                                class="Atelier__infos__topic__content"
+                                set:html={pageData.content.rendered}
+                            />
+                        </div>
+                    ) : (
+                        <div class="Atelier__infos__topic">
+                            <h1 class="Atelier__infos__topic__title">
+                                L'atelier
+                            </h1>
+                            <p class="Atelier__infos__topic__text">
+                                Contenu non disponible pour le moment.
+                            </p>
+                        </div>
+                    )
+                }
                 <div class="Atelier__infos__topic">
                     <ul class="Atelier__infos__topic__list">
                         <li class="Atelier__infos__topic__list__item">
@@ -79,38 +90,35 @@ try {
         <div class="Atelier__cours">
             <div class="Atelier__infos__topic">
                 <h2 class="Atelier__infos__topic__title">Les cours</h2>
-                <p class="Atelier__infos__topic__text">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Facere eos quo ipsa voluptatum, reprehenderit harum sequi
-                    laborum, voluptas odio, ipsam debitis tempore animi. Atque
-                    quia aliquid eaque necessitatibus. Dolore, tempore?
-                </p>
             </div>
-            {cours.length > 0 ? (
-                <div class="Atelier__infos__formula">
-                    {cours.map((item) => (
-                        <div class="Atelier__infos__formula__square">
-                            <h3 class="Atelier__infos__formula__square__title">
-                                {item.title?.rendered || "Cours"}
-                            </h3>
-                            <h4 class="Atelier__infos__formula__square__price">
-                                Tarif : {item.acf?.prix || "N/A"}€
-                            </h4>
-                            <p class="Atelier__infos__formula__square__text">
-                                {item.acf?.description || "Aucune description disponible."}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            ) : coursError ? (
-                <div class="Atelier__infos__error">
-                    <p>{coursError}</p>
-                </div>
-            ) : (
-                <div class="Atelier__infos__empty">
-                    <p>Aucun cours disponible pour le moment.</p>
-                </div>
-            )}
+            {
+                cours.length > 0 ? (
+                    <div class="Atelier__infos__formula">
+                        {cours.map((item) => (
+                            <div class="Atelier__infos__formula__square">
+                                <h3 class="Atelier__infos__formula__square__title">
+                                    {item.title?.rendered || "Cours"}
+                                </h3>
+                                <h4 class="Atelier__infos__formula__square__price">
+                                    Tarif : {item.acf?.prix || "N/A"}€
+                                </h4>
+                                <p class="Atelier__infos__formula__square__text">
+                                    {item.acf?.description ||
+                                        "Aucune description disponible."}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                ) : coursError ? (
+                    <div class="Atelier__infos__error">
+                        <p>{coursError}</p>
+                    </div>
+                ) : (
+                    <div class="Atelier__infos__empty">
+                        <p>Aucun cours disponible pour le moment.</p>
+                    </div>
+                )
+            }
         </div>
         <div class="Atelier__horaires">
             <div class="Atelier__infos__topic">
@@ -123,8 +131,8 @@ try {
                     créations: Des pièces uniques ou produites en petites
                     séries. L’atelier est ouvert sur rendez-vous.
                 </p>
-                <a class="Atelier__infos__topic__link" href="tel:0123456789"
-                    >Réservation par téléphone au 012345678</a
+                <a class="Atelier__infos__topic__link" href="tel:0675699961"
+                    >Réservation par téléphone au 06 75 69 99 61</a
                 >
             </div>
             <div style="flex: 3"></div>
@@ -167,7 +175,7 @@ try {
                     color: $text-color;
                     margin-bottom: 2rem;
                     text-align: center;
-                    
+
                     @media (max-width: 768px) {
                         font-size: 2rem;
                     }
@@ -180,18 +188,18 @@ try {
                     color: $text-color;
                     text-align: justify;
                     margin-bottom: 0;
-                    
+
                     @media (max-width: 768px) {
                         font-size: 1rem;
                         text-align: left;
                     }
                 }
-                
+
                 &__content {
                     font-family: $font-family-text;
                     color: $text-color;
                     line-height: 1.8;
-                    
+
                     :global(h2) {
                         font-family: $font-family-titles;
                         font-size: 1.5rem;
@@ -199,26 +207,26 @@ try {
                         margin-top: 2rem;
                         margin-bottom: 1rem;
                     }
-                    
+
                     :global(p) {
                         font-size: 1.125rem;
                         margin-bottom: 1rem;
                         text-align: justify;
-                        
+
                         @media (max-width: 768px) {
                             font-size: 1rem;
                             text-align: left;
                         }
                     }
-                    
+
                     :global(figure) {
                         margin: 1.5rem 0;
-                        
+
                         &.wp-block-image {
                             text-align: center;
                         }
                     }
-                    
+
                     :global(img) {
                         max-width: 100%;
                         height: auto;
@@ -245,7 +253,7 @@ try {
                     &:hover {
                         opacity: 0.85;
                     }
-                    
+
                     &:active {
                         opacity: 0.7;
                     }
@@ -282,16 +290,16 @@ try {
                             border-radius: 4px;
                             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                         }
-                        
+
                         small {
                             font-family: $font-family-text;
                             color: $text-color;
                             opacity: 0.7;
-                            
+
                             a {
                                 color: $accent-color;
                                 font-size: inherit;
-                                
+
                                 &:hover {
                                     text-decoration: underline;
                                 }
@@ -332,14 +340,14 @@ try {
                         line-height: 1.8;
                         color: $text-color;
                         text-align: justify;
-                        
+
                         @media (max-width: 768px) {
                             text-align: left;
                         }
                     }
                 }
             }
-            
+
             &__error,
             &__empty {
                 margin-top: 2rem;
@@ -347,7 +355,7 @@ try {
                 text-align: center;
                 background: rgba(0, 0, 0, 0.03);
                 border-radius: 4px;
-                
+
                 p {
                     font-family: $font-family-text;
                     color: $text-color;
